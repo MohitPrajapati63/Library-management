@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Management System</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    /* Navbar */
+    header {
+      background: linear-gradient(90deg, #004080, #0066cc);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 50px;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: 0.3s ease;
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Slideshow */
+    .slideshow {
+      position: relative;
+      max-width: 1000px;
+      height: 450px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .slides {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+    .caption {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(0,0,0,0.55);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.1rem;
+      backdrop-filter: blur(6px);
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 12px 16px;
+      font-size: 22px;
+      color: white;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      transition: 0.3s ease;
+      user-select: none;
+    }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+    .prev:hover, .next:hover {
+      background: rgba(0,0,0,0.7);
+      transform: scale(1.2);
+    }
+    .dots {
+      text-align: center;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+    }
+    .dot {
+      height: 12px; width: 12px;
+      margin: 0 5px;
+      background: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dot.active { background: #fff; }
+
+    /* Catalog */
+    .catalog {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .catalog h3 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #004080;
+    }
+    .books {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+    .book {
+      background: #fff;
+      padding: 20px;
+      width: 220px;
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .book:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .book h4 {
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+
+    /* Add Book */
+    .add-book {
+      padding: 40px 20px;
+      text-align: center;
+      background: linear-gradient(120deg, #e6f0ff, #f9f9ff);
+    }
+    .add-book h3 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      color: #004080;
+    }
+    .add-book form {
+      background: rgba(255,255,255,0.8);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      max-width: 350px;
+      margin: auto;
+      backdrop-filter: blur(6px);
+    }
+    .add-book input, .add-book button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .add-book input {
+      border: 1px solid #ccc;
+    }
+    .add-book button {
+      background: #0066cc;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .add-book button:hover {
+      background: #004080;
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .navbar { flex-direction: column; gap: 12px; }
+      .nav-links { flex-direction: column; gap: 15px; }
+      .books { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">📚 My Library</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalog.html">Catalog</a></li>
+        
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Slideshow -->
+  <section class="slideshow">
+    <div class="slides">
+      <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1000&q=80" alt="Library">
+      <div class="caption">Explore Thousands of Books</div>
+    </div>
+    <div class="slides">
+      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1000&q=80" alt="Books">
+      <div class="caption">Manage Your Collection Easily</div>
+    </div>
+    <div class="slides">
+      <img src="img1.jpg" alt="Reading">
+      <div class="caption">Discover New Reads</div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+    <div class="dots"></div>
+  </section>
+
+  <!-- Catalog -->
+  <section class="catalog">
+    <h3>📖 Featured Books</h3>
+    <div class="books"></div>
+  </section>
+
+  <!-- Add Book -->
+  <section class="add-book">
+    <h3>➕ Add a New Book</h3>
+    <form>
+      <input type="text" placeholder="Book Title" required />
+      <input type="text" placeholder="Author" required />
+      <button type="submit">Add Book</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 My Library | All Rights Reserved</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const booksContainer = document.querySelector(".books");
+    const dotsContainer = document.querySelector(".dots");
+
+    // Fetch Books
+    async function fetchBooks(){
+      try{
+        const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=6");
+        const data = await res.json();
+        booksContainer.innerHTML = "";
+        data.forEach(book=>{
+          const div = document.createElement("div");
+          div.classList.add("book");
+          div.innerHTML = `<h4>${book.title.substring(0,20)}...</h4><p>by Author ${book.userId}</p>`;
+          booksContainer.appendChild(div);
+        });
+      }catch(err){
+        booksContainer.innerHTML = "<p>Failed to load books</p>";
+      }
+    }
+
+    // Add Book
+    const form = document.querySelector(".add-book form");
+    form.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const title = form.querySelector("input[placeholder='Book Title']").value;
+      const author = form.querySelector("input[placeholder='Author']").value;
+      const newBook = {title, author};
+      const div = document.createElement("div");
+      div.classList.add("book");
+      div.innerHTML = `<h4>${newBook.title}</h4><p>by ${newBook.author}</p>`;
+      booksContainer.appendChild(div);
+      form.reset();
+      alert("Book added successfully!");
+    });
+
+    // Slideshow
+    let slideIndex=0;
+    showSlides();
+    function showSlides(){
+      const slides=document.getElementsByClassName("slides");
+      const dots=dotsContainer.getElementsByClassName("dot");
+      for(let i=0;i<slides.length;i++){slides[i].style.display="none";}
+      slideIndex++;
+      if(slideIndex>slides.length){slideIndex=1;}
+      for(let i=0;i<dots.length;i++){dots[i].classList.remove("active");}
+      slides[slideIndex-1].style.display="block";
+      dots[slideIndex-1].classList.add("active");
+      setTimeout(showSlides,4000);
+    }
+    function plusSlides(n){
+      slideIndex+=n-1;
+      showSlides();
+    }
+    // Dots
+    (function initDots(){
+      const slides=document.getElementsByClassName("slides");
+      for(let i=0;i<slides.length;i++){
+        const dot=document.createElement("span");
+        dot.classList.add("dot");
+        dot.addEventListener("click",()=>{slideIndex=i; showSlides();});
+        dotsContainer.appendChild(dot);
+      }
+    })();
+
+    // Load books on start
+    fetchBooks();
+  </script>
+</body>
+</html>

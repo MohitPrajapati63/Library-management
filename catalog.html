@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catalog | My Library</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #004080, #0066cc);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 50px;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: 0.3s ease;
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .catalog-page {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 0.5s;
+    }
+
+    .catalog-page h2 {
+      color: #0066cc;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .books-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .book {
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 15px;
+      width: 200px;
+      border-radius: 5px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUpFadeIn 0.8s ease forwards;
+    }
+    /* Stagger animation delays */
+    .book:nth-child(1) { animation-delay: 1s; }
+    .book:nth-child(2) { animation-delay: 1.2s; }
+    .book:nth-child(3) { animation-delay: 1.4s; }
+    .book:nth-child(4) { animation-delay: 1.6s; }
+    .book:nth-child(5) { animation-delay: 1.8s; }
+    .book:nth-child(6) { animation-delay: 2s; }
+
+    footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 170px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 2.2s;
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .books-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUpFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <div class="logo">📚 My Library</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalog.html">Catalog</a></li>
+        
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="catalog-page">
+    <h2>📚 Book Catalog</h2>
+    <div class="books-grid">
+      <div class="book">
+        <h4>The Alchemist</h4>
+        <p>by Paulo Coelho</p>
+      </div>
+      <div class="book">
+        <h4>Brave New World</h4>
+        <p>by Aldous Huxley</p>
+      </div>
+      <div class="book">
+        <h4>Pride and Prejudice</h4>
+        <p>by Jane Austen</p>
+      </div>
+      <div class="book">
+        <h4>The Hobbit</h4>
+        <p>by J.R.R. Tolkien</p>
+      </div>
+      <div class="book">
+        <h4>Harry Potter</h4>
+        <p>by J.K. Rowling</p>
+      </div>
+      <div class="book">
+        <h4>The Catcher in the Rye</h4>
+        <p>by J.D. Salinger</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 My Library | All rights reserved</p>
+  </footer>
+
+</body>
+</html>
